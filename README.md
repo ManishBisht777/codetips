@@ -8,7 +8,12 @@ Code tips sharing platform
 
 ## Features
 
-like,comment and share code tips, a tipsy subscription for a badge and additional
+- Auth using nextAuth and middleware
+- ORM using prisma deployed on mongoDB cloud
+  - Post Tips
+  - Like, Comments (TBD)
+- Subscription using stripe
+- Reuable Components using Radix UI and tailwind
 
 ## Getting Started
 
