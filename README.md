@@ -15,6 +15,14 @@ Code tips sharing platform
 - Subscription using stripe
 - Reuable Components using Radix UI and tailwind
 
+## Roadmap
+
+- Initial UI
+- Auth using prisma
+- Editor js setup
+- Post Tips
+- Like, Comment
+
 ## Getting Started
 
 Install dependencies
