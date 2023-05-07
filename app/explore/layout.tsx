@@ -1,5 +1,6 @@
 import Footer from "@/components/layout/footer";
 import Navbar from "@/components/layout/navbar";
+import ProfileCard from "@/components/profile-card";
 import { buttonVariants } from "@/components/ui/button";
 import { navbarConfig } from "@/config/navbar";
 import { cn } from "@/lib/utils";
@@ -26,8 +27,13 @@ const exploreLayout = ({ children }: exploreLayoutProps) => {
           </nav>
         </div>
       </header>
-      <main className="flex-1">{children}</main>
-      <Footer />
+      <div className="mt-3 container flex-1 md:grid md:grid-cols-[220px_1fr] md:gap-6 lg:grid-cols-[260px_1fr] lg:gap-10">
+        <aside className="fixed top-14 z-30 hidden h-[calc(100vh-10rem)] w-full shrink-0 overflow-y-auto  md:sticky md:block lg:py-2">
+          {/* <SidebarNav items={courseConfig.sidebarNav} /> */}
+          <ProfileCard />
+        </aside>
+        {children}
+      </div>
     </div>
   );
 };

@@ -21,8 +21,11 @@ import {
   SunMedium,
   Trash,
   Twitter,
+  Film,
   User,
   Star,
+  Pencil,
+  Video,
   X,
   type Icon as LucideIcon,
 } from "lucide-react";
@@ -32,6 +35,9 @@ export type Icon = LucideIcon;
 export const Icons = {
   logo: Anchor,
   star: Star,
+  video: Film,
+  write: Pencil,
+  live: Video,
   close: X,
   spinner: Loader2,
   chevronLeft: ChevronLeft,
