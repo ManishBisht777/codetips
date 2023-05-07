@@ -17,8 +17,8 @@ Code tips sharing platform
 
 ## Roadmap
 
-- Initial UI
-- Auth using prisma
+- ~Initial UI~
+- ~Auth using prisma~
 - Editor js setup
 - Post Tips
 - Like, Comment
