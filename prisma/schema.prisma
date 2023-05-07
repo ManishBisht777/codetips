@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Account{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?  @db.String
+  access_token      String?  @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?  @db.String
+  session_state     String?
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name:"updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([provider, providerAccountId])
+
+  @@map(name: "accounts")
+}
+
+model Session {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String @db.ObjectId
+  sessionToken String   @unique
+  expires      DateTime
+  user User @relation(fields: [userId],references: [id])
+
+   @@map(name: "sessions")
+}
+
+model User{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  email String? @unique
+  name String?
+  emailVerified DateTime?
+  image String?
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name:"updated_at")
+
+  accounts Account[]
+  sessions Session[]
+
+  stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
+  stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
+  stripePriceId          String?   @map(name: "stripe_price_id")
+  stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
+  
+  @@map(name:"users")
+}
+

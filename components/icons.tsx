@@ -12,6 +12,7 @@ import {
   Image,
   Laptop,
   Loader2,
+  LogOut,
   LucideProps,
   Moon,
   MoreVertical,
@@ -34,6 +35,7 @@ export type Icon = LucideIcon;
 
 export const Icons = {
   logo: Anchor,
+  logout: LogOut,
   star: Star,
   video: Film,
   write: Pencil,
