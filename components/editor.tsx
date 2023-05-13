@@ -4,12 +4,34 @@ import { cn } from "@/lib/utils";
 import React from "react";
 import { buttonVariants } from "./ui/button";
 import EditorJS from "@editorjs/editorjs";
+import { Icons } from "./icons";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { postSchema } from "@/lib/validation/post";
+import { z } from "zod";
+import { toast } from "./ui/use-toast";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
-interface EditorProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+interface EditorProps {
+  setToggleCreatePostModal: React.Dispatch<React.SetStateAction<any>>;
+}
 
-const Editor = ({ ...props }: EditorProps) => {
+const Editor = ({ setToggleCreatePostModal }: EditorProps) => {
   const [isMounted, setIsMounted] = React.useState(false);
+  const [isSaving, setIsSaving] = React.useState<boolean>(false);
   const ref = React.useRef<EditorJS>();
+  const router = useRouter();
+
+  type FormData = z.infer<typeof postSchema>;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(postSchema),
+  });
 
   const initializeEditor = React.useCallback(async () => {
     if (!ref.current) {
@@ -34,15 +56,62 @@ const Editor = ({ ...props }: EditorProps) => {
     if (isMounted) initializeEditor();
   }, [isMounted]);
 
+  async function onSubmit(data: FormData) {
+    setIsSaving(true);
+    const blocks = await ref.current?.save();
+
+    const response = await fetch(`/api/post`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: data.title,
+        content: blocks,
+      }),
+    });
+
+    setIsSaving(false);
+    setToggleCreatePostModal(false);
+
+    if (!response?.ok) {
+      return toast({
+        title: "Something went wrong.",
+        description: "Your post was not saved. Please try again.",
+        variant: "destructive",
+      });
+    }
+
+    router.refresh();
+
+    return toast({
+      description: "Your post has been saved.",
+    });
+  }
+
+  if (!isMounted) {
+    return null;
+  }
+
   return (
-    <div className="border-slate-200 rounded p-6 border">
+    <form
+      className="border-slate-200 rounded p-6 border"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className="flex justify-between items-center">
-        <p className="text-slate-700 font-semibold md:text-lg">Create Post</p>
         <button
-          className={cn(buttonVariants({ size: "sm" }), "px-4")}
-          {...props}
+          className="text-slate-700 font-semibold md:text-lg"
+          type="button"
+          onClick={() => setToggleCreatePostModal(false)}
         >
-          Back
+          <Icons.chevronLeft />
+        </button>
+        <button
+          type="submit"
+          className={cn(buttonVariants({ size: "sm" }), "px-4 flex")}
+        >
+          {isSaving && <Icons.spinner className=" animate-spin mr-2" />}
+          Save
         </button>
       </div>
       <div className="prose prose-stone dark:prose-invert mt-4">
@@ -51,6 +120,7 @@ const Editor = ({ ...props }: EditorProps) => {
           id="title"
           placeholder="Post title"
           className="w-full resize-none appearance-none overflow-hidden bg-transparent text-3xl font-bold focus:outline-none mb-4"
+          {...register("title")}
         />
         <div id="editor" />
         <p className="text-sm text-gray-500 mt-4">
@@ -61,7 +131,7 @@ const Editor = ({ ...props }: EditorProps) => {
           to open the command menu.
         </p>
       </div>
-    </div>
+    </form>
   );
 };
 

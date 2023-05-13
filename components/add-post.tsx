@@ -15,9 +15,7 @@ function AddPost({}: addPostProps) {
   return (
     <div>
       {toggleCreatePostModal ? (
-        <Editor
-          onClick={() => setToggleCreatePostModal(!toggleCreatePostModal)}
-        />
+        <Editor setToggleCreatePostModal={setToggleCreatePostModal} />
       ) : (
         <div className="border gap-8 rounded-md p-6 text-center border-dashed min-h-[6rem] flex flex-col justify-center items-center">
           <div className="p-3 w-16 h-16 flex justify-center items-center rounded-full bg-slate-100">
@@ -31,7 +29,6 @@ function AddPost({}: addPostProps) {
             </p>
           </div>
 
-          {/* toggle create post modal */}
           <button
             className={cn(buttonVariants(), "flex")}
             onClick={() => setToggleCreatePostModal(!toggleCreatePostModal)}
