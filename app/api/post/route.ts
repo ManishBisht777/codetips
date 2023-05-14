@@ -8,6 +8,18 @@ const postCreateSchema = z.object({
   content: z.any().optional(),
 });
 
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const len = searchParams.get("count");
+
+  const posts = await prisma.post.findMany({
+    take: 2,
+    skip: len ? parseInt(len) : 0,
+  });
+
+  return new Response(JSON.stringify(posts));
+}
+
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions);
