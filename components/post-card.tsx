@@ -5,7 +5,6 @@ import { Icons } from "./icons";
 import Link from "next/link";
 
 export default function PostCard(postData: PostWithUser) {
-  console.log(postData);
   return (
     <div className="flex gap-4 border-b p-4">
       <Image
