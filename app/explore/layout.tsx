@@ -14,7 +14,7 @@ type exploreLayoutProps = {
 const exploreLayout = ({ children }: exploreLayoutProps) => {
   return (
     <div className="min-h-screen flex-col flex">
-      <header className="container z-40 bg-background fixed top-0">
+      <header className="container z-40 bg-background fixed top-0 self-center">
         <div className="flex h-20 items-center justify-between py-6">
           <Navbar items={navbarConfig.mainNav} />
           <nav>

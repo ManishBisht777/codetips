@@ -8,15 +8,39 @@ const postCreateSchema = z.object({
   content: z.any().optional(),
 });
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const len = searchParams.get("count");
+// export async function GET(request: Request) {
+//   const { searchParams } = new URL(request.url);
 
+//   const pageNumberParam = searchParams.get("page");
+//   const pageNumber = pageNumberParam ? parseInt(pageNumberParam) : 0;
+
+//   const pageSizeParam = process.env.PAGE_SIZE;
+//   const pageSize = pageSizeParam ? parseInt(pageSizeParam) : 20;
+//   console.log(pageNumber);
+//   console.log(pageSize);
+
+//   const skipAmount = pageNumber * pageSize;
+
+//   const posts = await prisma.post.findMany({
+//     skip: skipAmount,
+//     take: pageSize,
+//   });
+
+//   return new Response(JSON.stringify(posts));
+// }
+
+export async function GET(req: Request) {
   const posts = await prisma.post.findMany({
-    take: 2,
-    skip: len ? parseInt(len) : 0,
+    include: {
+      author: {
+        select: {
+          name: true,
+          image: true,
+          email: true,
+        },
+      },
+    },
   });
-
   return new Response(JSON.stringify(posts));
 }
 
