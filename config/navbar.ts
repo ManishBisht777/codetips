@@ -1,3 +1,5 @@
+import { NavbarConfig } from "@/types";
+
 export const navbarConfig: NavbarConfig = {
   mainNav: [
     {

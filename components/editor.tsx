@@ -10,15 +10,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { postSchema } from "@/lib/validation/post";
 import { z } from "zod";
 import { toast } from "./ui/use-toast";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 
 interface EditorProps {
   setToggleCreatePostModal: React.Dispatch<React.SetStateAction<any>>;
+  toggleCreatePostModal: boolean;
 }
 
-const Editor = ({ setToggleCreatePostModal }: EditorProps) => {
-  const [isMounted, setIsMounted] = React.useState(false);
+const Editor = ({
+  setToggleCreatePostModal,
+  toggleCreatePostModal,
+}: EditorProps) => {
   const [isSaving, setIsSaving] = React.useState<boolean>(false);
   const ref = React.useRef<EditorJS>();
   const router = useRouter();
@@ -47,14 +49,12 @@ const Editor = ({ setToggleCreatePostModal }: EditorProps) => {
   }, []);
 
   React.useEffect(() => {
-    if (typeof window !== "undefined") {
-      setIsMounted(true);
-    }
-  }, []);
-
-  React.useEffect(() => {
-    if (isMounted) initializeEditor();
-  }, [isMounted]);
+    if (toggleCreatePostModal) initializeEditor();
+    return () => {
+      ref.current?.destroy();
+      ref.current = undefined;
+    };
+  }, [toggleCreatePostModal, initializeEditor]);
 
   async function onSubmit(data: FormData) {
     setIsSaving(true);
@@ -87,10 +87,6 @@ const Editor = ({ setToggleCreatePostModal }: EditorProps) => {
     return toast({
       description: "Your post has been saved.",
     });
-  }
-
-  if (!isMounted) {
-    return null;
   }
 
   return (

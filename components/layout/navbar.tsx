@@ -5,6 +5,7 @@ import React from "react";
 import { Icons } from "../icons";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { NavItem } from "@/types";
 
 type Props = {
   items?: NavItem[];

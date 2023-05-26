@@ -15,7 +15,10 @@ function AddPost({}: addPostProps) {
   return (
     <div>
       {toggleCreatePostModal ? (
-        <Editor setToggleCreatePostModal={setToggleCreatePostModal} />
+        <Editor
+          setToggleCreatePostModal={setToggleCreatePostModal}
+          toggleCreatePostModal={toggleCreatePostModal}
+        />
       ) : (
         <div className="border gap-8 rounded-md p-6 text-center border-dashed min-h-[6rem] flex flex-col justify-center items-center">
           <div className="p-3 w-16 h-16 flex justify-center items-center rounded-full bg-slate-100">
