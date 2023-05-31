@@ -1,4 +1,7 @@
+//@ts-nocheck
+
 import { Icons } from "@/components/icons";
+import ReadOnlyPost from "@/components/read-only-editor";
 import { buttonVariants } from "@/components/ui/button";
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
@@ -17,27 +20,33 @@ async function getPostById(postId: Post["id"], userId: User["id"]) {
     where: {
       id: postId,
     },
+    include: {
+      author: {
+        select: {
+          name: true,
+          image: true,
+          email: true,
+        },
+      },
+    },
   });
 
   return {
-    post: { ...post },
-    isCurrentUser: post?.authorId === userId,
+    post: { ...post, isCurrentUser: post?.authorId === userId },
   };
 }
 
 const page = async ({ params }: PostPageProps) => {
   const user = await getCurrentUser();
 
-  const post = await getPostById(params.postId, user?.id || "");
+  const { post } = await getPostById(params.postId, user?.id || "");
 
   if (!post) {
     notFound();
   }
 
-  console.log(post);
-
   return (
-    <div className="container flex flex-col">
+    <div className="container flex flex-col items-center">
       <div className="flex w-full items-center justify-between mt-6">
         <div className="flex items-center space-x-10">
           <Link
@@ -53,6 +62,24 @@ const page = async ({ params }: PostPageProps) => {
           <Icons.share className="ml-2 w-4" />
         </button>
       </div>
+
+      <ReadOnlyPost
+        post={{
+          id: post.id,
+          title: post.title,
+          content: post.content,
+          published: post.published,
+          createdAt: post.updatedAt,
+          updatedAt: post.updatedAt,
+          authorId: post.authorId,
+          author: {
+            image: post.author.image,
+            name: post.author.name,
+            email: post.author.image,
+          },
+          isCurrentUser: post.isCurrentUser,
+        }}
+      />
     </div>
   );
 };

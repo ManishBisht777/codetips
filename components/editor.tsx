@@ -11,6 +11,7 @@ import { postSchema } from "@/lib/validation/post";
 import { z } from "zod";
 import { toast } from "./ui/use-toast";
 import { useRouter } from "next/navigation";
+import { Post } from "@prisma/client";
 
 interface EditorProps {
   setToggleCreatePostModal: React.Dispatch<React.SetStateAction<any>>;
