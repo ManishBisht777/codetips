@@ -1,4 +1,4 @@
-import { NavbarConfig } from "@/types";
+import { DashboardConfig, NavbarConfig } from "@/types";
 
 export const navbarConfig: NavbarConfig = {
   mainNav: [
@@ -13,6 +13,26 @@ export const navbarConfig: NavbarConfig = {
     {
       title: "Subscription",
       href: "/billing",
+    },
+  ],
+};
+
+export const sidebarConfig: DashboardConfig = {
+  sidebar: [
+    {
+      title: "Posts",
+      icon: "post",
+      href: "/dashboard",
+    },
+    {
+      title: "Billing",
+      icon: "billing",
+      href: "/dashboard/billing",
+    },
+    {
+      title: "Edit Profile",
+      icon: "write",
+      href: "/dashboard/edit",
     },
   ],
 };

@@ -3,6 +3,7 @@ import React from "react";
 import { Icons } from "./icons";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
+import Link from "next/link";
 
 interface profileCardProps {}
 
@@ -27,14 +28,17 @@ const ProfileCard = (props: profileCardProps) => {
       </div>
 
       <div className="flex justify-center gap-4 border-t pt-4">
-        <button className={cn(buttonVariants({ variant: "secondary" }))}>
+        <Link
+          className={cn(buttonVariants({ variant: "secondary" }))}
+          href="/profile"
+        >
           <Icons.write className="mr-2 w-4" />
           Profile
-        </button>
-        <button className={cn(buttonVariants({ variant: "outline" }))}>
+        </Link>
+        <Link className={cn(buttonVariants({ variant: "outline" }))} href="/">
           <Icons.billing className="mr-2 w-4" />
           Plan
-        </button>
+        </Link>
       </div>
     </div>
   );
