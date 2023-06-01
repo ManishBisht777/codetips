@@ -4,7 +4,10 @@ import React from "react";
 import { Icons } from "./icons";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
-import Editor from "./editor";
+
+import dynamic from "next/dynamic";
+
+const Editor = dynamic(() => import("./editor"), { ssr: false });
 
 interface addPostProps {}
 

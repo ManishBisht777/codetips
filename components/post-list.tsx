@@ -7,7 +7,7 @@ import { PostWithUser } from "@/types";
 
 type Props = {};
 
-export default function PostList({}: Props) {
+const PostList = ({}: Props) => {
   const [loading, setLoading] = React.useState(false);
   const [posts, setPosts] = React.useState<PostWithUser[]>([]);
 
@@ -39,4 +39,6 @@ export default function PostList({}: Props) {
       )}
     </div>
   );
-}
+};
+
+export default PostList;

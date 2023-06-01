@@ -3,12 +3,12 @@ import PostCard from "@/components/post-card";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 import React from "react";
 
-type Props = {};
+interface DashBoardProps {}
 
-export async function DashBoard(props: Props) {
+const DashBoard = async (props: DashBoardProps) => {
   const user = await getCurrentUser();
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login");
@@ -49,6 +49,6 @@ export async function DashBoard(props: Props) {
       )}
     </div>
   );
-}
+};
 
 export default DashBoard;

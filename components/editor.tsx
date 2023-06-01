@@ -11,7 +11,6 @@ import { postSchema } from "@/lib/validation/post";
 import { z } from "zod";
 import { toast } from "./ui/use-toast";
 import { useRouter } from "next/navigation";
-import { Post } from "@prisma/client";
 
 interface EditorProps {
   setToggleCreatePostModal: React.Dispatch<React.SetStateAction<any>>;
@@ -23,6 +22,7 @@ const Editor = ({
   toggleCreatePostModal,
 }: EditorProps) => {
   const [isSaving, setIsSaving] = React.useState<boolean>(false);
+  const [isMounted, setIsMounted] = React.useState<boolean>(false);
   const ref = React.useRef<EditorJS>();
   const router = useRouter();
 
@@ -50,12 +50,18 @@ const Editor = ({
   }, []);
 
   React.useEffect(() => {
-    if (toggleCreatePostModal) initializeEditor();
+    if (toggleCreatePostModal && isMounted) initializeEditor();
     return () => {
       ref.current?.destroy();
       ref.current = undefined;
     };
-  }, [toggleCreatePostModal, initializeEditor]);
+  }, [toggleCreatePostModal, initializeEditor, isMounted]);
+
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsMounted(true);
+    }
+  }, []);
 
   async function onSubmit(data: FormData) {
     setIsSaving(true);
@@ -88,6 +94,10 @@ const Editor = ({
     return toast({
       description: "Your post has been saved.",
     });
+  }
+
+  if (!isMounted) {
+    return null;
   }
 
   return (
