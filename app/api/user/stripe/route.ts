@@ -18,7 +18,6 @@ export async function GET(req: Request) {
     }
 
     const subscriptionPlan = await getCurrentUserPlan(session.user.id);
-    console.log(subscriptionPlan);
     // The user is on the pro plan.
     // Create a portal session to manage subscription.
     if (subscriptionPlan.isPro && subscriptionPlan.stripeCustomerId) {
@@ -56,8 +55,6 @@ export async function GET(req: Request) {
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 });
     }
-
-    console.log(error);
 
     return new Response(null, { status: 500 });
   }

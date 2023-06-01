@@ -14,14 +14,9 @@ const page = async (props: Props) => {
       <div className="fixed top-14 z-30 hidden h-[calc(100vh-10rem)] w-[260px] shrink-0 overflow-y-auto py-6 pr-2 md:sticky md:block lg:py-10">
         Banner like valo?
         <ul>
-          <li>
-            description or banner on clicking Post the page goes to /post/id
-            page and show data on editor js (readOnly)
-          </li>
           <li>Like and comment</li>
-          <li>subscription</li>
-          <li>home page revamp</li>
           <li>Profile update and stuff</li>
+          <li>home page revamp</li>
           <li>Infinite scroll</li>
           <li>performance optimise</li>
           <li>scroll optimise</li>

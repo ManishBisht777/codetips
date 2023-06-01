@@ -3,17 +3,18 @@ import Image from "next/image";
 import React from "react";
 import { Icons } from "./icons";
 import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 export default function PostCard(postData: PostWithUser) {
   return (
     <div className="flex gap-4 border-b p-4">
-      <Image
-        src={postData.author.image}
-        width={50}
-        height={50}
-        alt="author image"
-        className="rounded-full overflow-hidden h-fit"
-      />
+      <Avatar className="w-12 h-12">
+        <AvatarImage
+          className="rounded-full overflow-hidden h-fit"
+          src={postData.author.image || ""}
+        />
+        <AvatarFallback>{postData.author.name}</AvatarFallback>
+      </Avatar>
 
       <div className="flex-1">
         <div className="flex gap-2 items-center">
