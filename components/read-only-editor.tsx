@@ -48,7 +48,7 @@ const ReadOnlyPost = ({ post }: ReadOnlyPostProps) => {
       <div className="flex gap-4 my-5">
         <Avatar>
           <AvatarImage
-            src={post.author.image}
+            src={post.author.image || ""}
             className="w-10 h-10 rounded-full"
           />
           <AvatarFallback>{post.author.name}</AvatarFallback>

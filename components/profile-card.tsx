@@ -30,12 +30,15 @@ const ProfileCard = (props: profileCardProps) => {
       <div className="flex justify-center gap-4 border-t pt-4">
         <Link
           className={cn(buttonVariants({ variant: "secondary" }))}
-          href="/profile"
+          href="/dashboard/edit"
         >
           <Icons.write className="mr-2 w-4" />
           Profile
         </Link>
-        <Link className={cn(buttonVariants({ variant: "outline" }))} href="/">
+        <Link
+          className={cn(buttonVariants({ variant: "outline" }))}
+          href="/dashboard/billing"
+        >
           <Icons.billing className="mr-2 w-4" />
           Plan
         </Link>
