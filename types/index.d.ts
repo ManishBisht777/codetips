@@ -1,5 +1,5 @@
 import { Icons } from "@/components/icons";
-import { Post } from "@prisma/client";
+import { Post, User } from "@prisma/client";
 
 interface NavItem {
   title: string;
@@ -34,3 +34,15 @@ interface PostAuthor {
 }
 
 interface PostWithUser extends Post, PostAuthor {}
+
+export type SubscriptionPlan = {
+  name: string;
+  description: string;
+  stripePriceId: string;
+};
+
+export type UserSubscriptionPlan = SubscriptionPlan &
+  Pick<User, "stripeCustomerId" | "stripeSubscriptionId"> & {
+    stripeCurrentPeriodEnd: number;
+    isPro: boolean;
+  };

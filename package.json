@@ -38,6 +38,7 @@
     "react-virtualized-auto-sizer": "^1.0.16",
     "react-window": "^1.8.9",
     "react-window-infinite-loader": "^1.0.9",
+    "stripe": "^12.7.0",
     "tailwind-merge": "^1.12.0",
     "tailwindcss-animate": "^1.0.5",
     "typescript": "5.0.4",

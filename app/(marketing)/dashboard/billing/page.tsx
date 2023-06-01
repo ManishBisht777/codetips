@@ -1,11 +1,32 @@
+import BillingForm from "@/components/billing-form";
 import { Icons } from "@/components/icons";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { authOptions } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/session";
+import { stripe } from "@/lib/stripe";
+import { getCurrentUserPlan } from "@/lib/subscription";
+import { redirect } from "next/navigation";
 import React from "react";
 
 type Props = {};
 
-const Billing = (props: Props) => {
+const Billing = async (props: Props) => {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    redirect(authOptions?.pages?.signIn || "/login");
+  }
+
+  const subscriptionPlan = await getCurrentUserPlan(user.id);
+
+  // If user has a pro plan, check cancel status on Stripe.
+  let isCanceled = false;
+  if (subscriptionPlan.isPro && subscriptionPlan.stripeSubscriptionId) {
+    const stripePlan = await stripe.subscriptions.retrieve(
+      subscriptionPlan.stripeSubscriptionId
+    );
+    isCanceled = stripePlan.cancel_at_period_end;
+  }
+
   return (
     <div>
       <h3 className="text-xl md:text-4xl font-bold">Billing</h3>
@@ -31,19 +52,12 @@ const Billing = (props: Props) => {
         </div>
       </div>
 
-      <div className="mt-4 border rounded-sm p-4 flex flex-col items-start">
-        <h3 className="text-lg md:text-xl font-bold">Subscription Plan</h3>
-        <p className="text-slate-400 text-sm">
-          You are currently on the{" "}
-          <span className="mx-[.15rem] font-bold">Free </span>
-          plan.
-        </p>
-        <p className="my-4">
-          The free plan is limited to 3 posts. Upgrade to the PRO plan for
-          unlimited posts.
-        </p>
-        <button className={cn(buttonVariants())}>Upgrade To Pro</button>
-      </div>
+      <BillingForm
+        subscriptionPlan={{
+          ...subscriptionPlan,
+          isCanceled,
+        }}
+      />
     </div>
   );
 };
