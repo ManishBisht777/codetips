@@ -47,20 +47,24 @@ const BillingForm = ({ subscriptionPlan }: BillingProps) => {
         plan.
       </p>
       <p className="my-4">{subscriptionPlan.description}</p>
-      <form action="" onSubmit={onSubmit}>
+      <form
+        action=""
+        onSubmit={onSubmit}
+        className="flex justify-between items-center w-full"
+      >
         <button type="submit" className={cn(buttonVariants())}>
           {isLoading && <Icons.spinner className="mr-1 animate-spin w-4 h-4" />}
           {subscriptionPlan.isPro ? "Manage Subscription" : "Upgrade to PRO"}
         </button>
+        {subscriptionPlan.isPro ? (
+          <p className="rounded-full text-xs font-medium mt-2">
+            {subscriptionPlan.isCanceled
+              ? "Your plan will be canceled on "
+              : "Your plan renews on "}
+            {formatDate(subscriptionPlan.stripeCurrentPeriodEnd)}.
+          </p>
+        ) : null}
       </form>
-      {subscriptionPlan.isPro ? (
-        <p className="rounded-full text-xs font-medium mt-2">
-          {subscriptionPlan.isCanceled
-            ? "Your plan will be canceled on "
-            : "Your plan renews on "}
-          {formatDate(subscriptionPlan.stripeCurrentPeriodEnd)}.
-        </p>
-      ) : null}
     </div>
   );
 };
