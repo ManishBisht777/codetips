@@ -14,7 +14,7 @@ import { toast } from "./ui/use-toast";
 import { User } from "@prisma/client";
 
 interface ProfileUpdateFormProps {
-  user: Pick<User, "id" | "name">;
+  user: Pick<User, "id" | "name" | "bio">;
 }
 
 type FormData = z.infer<typeof userSchema>;
@@ -30,11 +30,14 @@ const ProfileUpdateForm = ({ user }: ProfileUpdateFormProps) => {
     resolver: zodResolver(userSchema),
     defaultValues: {
       name: user?.name || "",
+      bio: user.bio || "",
     },
   });
 
   async function onSubmit(data: FormData) {
     setIsSaving(true);
+
+    console.log(data);
 
     const response = await fetch(`/api/user/${user.id}`, {
       method: "PATCH",
@@ -43,6 +46,7 @@ const ProfileUpdateForm = ({ user }: ProfileUpdateFormProps) => {
       },
       body: JSON.stringify({
         name: data.name,
+        bio: data.bio,
       }),
     });
 
@@ -51,13 +55,13 @@ const ProfileUpdateForm = ({ user }: ProfileUpdateFormProps) => {
     if (!response?.ok) {
       return toast({
         title: "Something went wrong.",
-        description: "Your name was not updated. Please try again.",
+        description: "Your profile was not updated. Please try again.",
         variant: "destructive",
       });
     }
 
     toast({
-      description: "Your name has been updated.",
+      description: "Your profile has been updated.",
     });
   }
 
@@ -80,7 +84,7 @@ const ProfileUpdateForm = ({ user }: ProfileUpdateFormProps) => {
           Your Bio
         </label>
         <p>Please enter your full Bio to show who you are</p>
-        <Textarea id="bio" className="mt-2" />
+        <Textarea id="bio" className="mt-2" {...register("bio")} />
       </div>
       <button type="submit" className={cn(buttonVariants(), "mt-6 px-6")}>
         {isSaving && <Icons.spinner className="w-4 h-4 animate-spin mr-1" />}

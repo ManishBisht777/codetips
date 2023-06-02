@@ -1,25 +1,57 @@
-import Image from "next/image";
 import React from "react";
 import { Icons } from "./icons";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import Link from "next/link";
+import { getSession } from "@/lib/session";
+import { prisma } from "@/lib/db";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 interface profileCardProps {}
 
-const ProfileCard = (props: profileCardProps) => {
+const ProfileCard = async (props: profileCardProps) => {
+  const session = await getSession();
+
+  if (!session)
+    return (
+      <div>
+        <div className="border flex flex-col gap-6 p-2 pb-6">
+          <div className="flex flex-col gap-4 items-center">
+            <div className="w-full  top-0 h-16 bg-slate-100"></div>
+            <div className="w-14 h-14 bg-black rounded-full -mt-10"></div>
+            <div className="text-center">
+              <p className="font-semibold "></p>
+              <p className="text-sm text-slate-600">
+                Frontend Developer | open souce enthusiast | Freelance Web
+                Developer @Fiverr | Hackathons
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+
+  const data = await prisma.user.findUnique({
+    where: {
+      id: session.user.id,
+    },
+  });
+
   return (
     <div className="border flex flex-col gap-6 p-2 pb-6">
       <div className="flex flex-col gap-4 items-center">
         {/* <Image src={} /> */}
         <div className="w-full  top-0 h-16 bg-slate-100"></div>
-        <div className="w-14 h-14 bg-black rounded-full -mt-10"></div>
+        <Avatar className="w-16 h-16 -mt-10">
+          <AvatarImage
+            className="rounded-full overflow-hidden h-fit"
+            src={data?.image || ""}
+          />
+          <AvatarFallback>{data?.name}</AvatarFallback>
+        </Avatar>
         <div className="text-center">
-          <p className="font-semibold ">Manish Bisht</p>
-          <p className="text-sm text-slate-600">
-            Frontend Developer | open souce enthusiast | Freelance Web Developer
-            @Fiverr | Hackathons
-          </p>
+          <p className="font-semibold ">{session.user.name}</p>
+          <p className="text-sm text-slate-600">{data?.bio}</p>
         </div>
         <div className="text-sm text-slate-600">
           <span className="text-slate-900 font-semibold"> 210</span> Followers{" "}

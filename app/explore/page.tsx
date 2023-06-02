@@ -14,7 +14,6 @@ const page = async (props: Props) => {
       <div className="fixed top-14 z-30 hidden h-[calc(100vh-10rem)] w-[260px] shrink-0 overflow-y-auto py-6 pr-2 md:sticky md:block lg:py-10">
         <ul>
           <li>post and update user schema update</li>
-          <li>utility to convert email into like @manishbisht </li>
           <li>comment</li>
           <li>Infinite scroll</li>
           <li>performance optimise</li>
