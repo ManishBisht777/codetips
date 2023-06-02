@@ -1,11 +1,39 @@
+"use client";
+
 import { PostWithUser } from "@/types";
-import Image from "next/image";
 import React from "react";
 import { Icons } from "./icons";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { toast } from "./ui/use-toast";
 
 export default function PostCard(postData: PostWithUser) {
+  const handleLike = async () => {
+    const isLiked = postData.likedIds.includes(postData.authorId);
+
+    const response = await fetch(`/api/post/like`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: postData.id,
+        isLiked: isLiked,
+      }),
+    });
+
+    if (response.ok) {
+      return toast({
+        description: "Liked updated",
+      });
+    } else {
+      return toast({
+        title: "Some error occured",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="flex gap-4 border-b p-4">
       <Avatar className="w-12 h-12">
@@ -32,14 +60,26 @@ export default function PostCard(postData: PostWithUser) {
           doloribus consectetur qui odio consectetur adipisicing elit ...
         </p>
         <div className="flex gap-6 mt-4 text-slate-600">
-          <button className="cursor-pointer">
-            <Icons.like className="w-5" strokeWidth={1} />
+          <button className="cursor-pointer relative">
+            <Icons.like
+              strokeWidth={1}
+              className="w-5 hover:fill-pink-400 hover:stroke-white transition-all"
+            />
+            <p className="sr-only">Like</p>
           </button>
           <button className="cursor-pointer">
-            <Icons.bookmark className="w-5" strokeWidth={1} />
+            <Icons.bookmark
+              className="w-5 hover:stroke-blue-500 transition-all"
+              strokeWidth={1}
+            />
+            <p className="sr-only">Bookmark</p>
           </button>
           <button className="cursor-pointer">
-            <Icons.share className="w-5 " strokeWidth={1} />
+            <Icons.share
+              className="w-5 hover:stroke-slate-800 transition-all"
+              strokeWidth={1}
+            />
+            <p className="sr-only">Share</p>
           </button>
         </div>
       </div>

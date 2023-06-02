@@ -10,9 +10,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Account{
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String @db.ObjectId
+model Account {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String   @db.ObjectId
   type              String
   provider          String
   providerAccountId String
@@ -23,57 +23,58 @@ model Account{
   scope             String?
   id_token          String?  @db.String
   session_state     String?
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name:"updated_at")
+  createdAt         DateTime @default(now()) @map(name: "created_at")
+  updatedAt         DateTime @updatedAt @map(name: "updated_at")
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  @@unique([provider, providerAccountId])
 
+  @@unique([provider, providerAccountId])
   @@map(name: "accounts")
 }
 
 model Session {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId       String @db.ObjectId
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String   @db.ObjectId
   sessionToken String   @unique
   expires      DateTime
-  user User @relation(fields: [userId],references: [id])
+  user         User     @relation(fields: [userId], references: [id])
 
-   @@map(name: "sessions")
+  @@map(name: "sessions")
 }
 
-model User{
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  email String? @unique
-  name String?
+model User {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  email         String?   @unique
+  name          String?
   emailVerified DateTime?
-  image String?
+  image         String?
   createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name:"updated_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  bookmarkIds   String[]  @db.ObjectId
 
   accounts Account[]
   sessions Session[]
-  posts Post[]
+  posts    Post[]
 
   stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
   stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
   stripePriceId          String?   @map(name: "stripe_price_id")
   stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
-  
-  @@map(name:"users")
+
+  @@map(name: "users")
 }
 
-
-model Post{
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+model Post {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   title     String
   content   Json?
   published Boolean  @default(false)
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
-  authorId  String @db.ObjectId
+  authorId  String   @db.ObjectId
+  likedIds  String[] @db.ObjectId
 
   author User @relation(fields: [authorId], references: [id])
 
-  @@map(name:"posts")
+  @@map(name: "posts")
 }
