@@ -6,7 +6,7 @@ import { Icons } from "./icons";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import useLike from "@/hooks/useLike";
-import { cn } from "@/lib/utils";
+import { cn, formatEmail } from "@/lib/utils";
 
 export default function PostCard(postData: PostWithUser) {
   const { hasLiked, toggleLike } = useLike({ postId: postData.id });
@@ -24,7 +24,9 @@ export default function PostCard(postData: PostWithUser) {
       <div className="flex-1">
         <div className="flex gap-2 items-center">
           <p className="text-slate-800 font-medium">{postData.author.name}</p>
-          <p className="text-slate-500 text-sm">@manishbisht9711</p>
+          <p className="text-slate-500 text-sm">
+            {formatEmail(postData.author.email || "")}
+          </p>
         </div>
         <Link
           href={`/post/${postData.id}`}
