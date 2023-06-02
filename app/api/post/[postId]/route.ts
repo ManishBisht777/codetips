@@ -19,6 +19,19 @@ export async function GET(
         id: params.postId,
       },
       include: {
+        comments: {
+          select: {
+            id: true,
+            body: true,
+            user: {
+              select: {
+                name: true,
+                image: true,
+                email: true,
+              },
+            },
+          },
+        },
         author: {
           select: {
             name: true,

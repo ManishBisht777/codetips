@@ -7,9 +7,17 @@ import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import useLike from "@/hooks/useLike";
 import { cn, formatEmail } from "@/lib/utils";
+import { toast } from "./ui/use-toast";
 
 export default function PostCard(postData: PostWithUser) {
   const { hasLiked, toggleLike } = useLike({ postId: postData.id });
+
+  function handleBookmark() {
+    return toast({
+      title: "Feature not implemented",
+      description: "This feature is currenly being worked on",
+    });
+  }
 
   return (
     <div className="flex gap-4 border-b p-4">
@@ -49,7 +57,7 @@ export default function PostCard(postData: PostWithUser) {
             />
             <p className="sr-only">Like</p>
           </button>
-          <button className="cursor-pointer">
+          <button className="cursor-pointer" onClick={handleBookmark}>
             <Icons.bookmark
               className="w-5 hover:stroke-blue-500 transition-all"
               strokeWidth={1}
