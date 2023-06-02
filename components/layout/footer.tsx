@@ -1,5 +1,6 @@
 import React from "react";
 import { Icons } from "../icons";
+import { siteConfig } from "@/config/site";
 
 type Props = {};
 
@@ -10,7 +11,7 @@ function Footer({}: Props) {
       <p className="flex gap-1">
         Built by
         <a
-          href="/"
+          href={siteConfig.links.twitter}
           target="_blank"
           rel="noreferrer"
           className="font-medium underline underline-offset-4"
@@ -19,7 +20,7 @@ function Footer({}: Props) {
         </a>
         Inspired By
         <a
-          href=""
+          href="https://twitter.com/shadcn"
           target="_blank"
           rel="noreferrer"
           className="font-medium underline underline-offset-4"
@@ -28,7 +29,7 @@ function Footer({}: Props) {
         </a>
         Hosted on
         <a
-          href=""
+          href="https://vercel.com"
           target="_blank"
           rel="noreferrer"
           className="font-medium underline underline-offset-4"
@@ -37,7 +38,7 @@ function Footer({}: Props) {
         </a>
         Illustrations by
         <a
-          href=""
+          href="https://popsy.co"
           target="_blank"
           rel="noreferrer"
           className="font-medium underline underline-offset-4"
@@ -46,7 +47,7 @@ function Footer({}: Props) {
         </a>
         The source code is available on
         <a
-          href=""
+          href={siteConfig.links.github}
           target="_blank"
           rel="noreferrer"
           className="font-medium underline underline-offset-4"

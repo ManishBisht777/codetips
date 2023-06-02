@@ -42,18 +42,24 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
           </div>
         </div>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Icons.user className="mr-2 h-4 w-4" />
-          <span>Profile</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Icons.billing className="mr-2 h-4 w-4" />
-          <span>Billing</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Icons.settings className="mr-2 h-4 w-4" />
-          <span>Settings</span>
-        </DropdownMenuItem>
+        <Link href="/dashboard" className="cursor-pointer">
+          <DropdownMenuItem>
+            <Icons.dashboard className="mr-2 h-4 w-4" />
+            <span>Dashboard</span>
+          </DropdownMenuItem>
+        </Link>
+        <Link href="/dashboard/edit" className="cursor-pointer">
+          <DropdownMenuItem>
+            <Icons.user className="mr-2 h-4 w-4" />
+            <span>Profile</span>
+          </DropdownMenuItem>
+        </Link>
+        <Link href="/dashboard/billing" className="cursor-pointer">
+          <DropdownMenuItem>
+            <Icons.billing className="mr-2 h-4 w-4" />
+            <span>Billing</span>
+          </DropdownMenuItem>
+        </Link>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="cursor-pointer"

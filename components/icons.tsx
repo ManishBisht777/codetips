@@ -30,6 +30,7 @@ import {
   Pencil,
   Bookmark,
   Video,
+  LayoutDashboard,
   X,
   type Icon as LucideIcon,
 } from "lucide-react";
@@ -39,6 +40,7 @@ export type Icon = LucideIcon;
 export const Icons = {
   logo: Anchor,
   logout: LogOut,
+  dashboard: LayoutDashboard,
   star: Star,
   share: Share2,
   bookmark: Bookmark,
