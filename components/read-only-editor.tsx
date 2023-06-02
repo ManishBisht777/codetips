@@ -6,12 +6,8 @@ import EditorJS from "@editorjs/editorjs";
 import { PostWithUser } from "@/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
-interface IsCurrentUserPost extends PostWithUser {
-  isCurrentUser: boolean;
-}
-
 interface ReadOnlyPostProps {
-  post: IsCurrentUserPost;
+  post: PostWithUser;
 }
 
 const ReadOnlyPost = ({ post }: ReadOnlyPostProps) => {

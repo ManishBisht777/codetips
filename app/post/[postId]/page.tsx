@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 "use client";
 
 import CommentCard from "@/components/comment-card";
@@ -15,48 +17,12 @@ interface PostPageProps {
   params: { postId: string };
 }
 
-// async function getPostById(postId: Post["id"], userId: User["id"]) {
-//   const post = await prisma.post.findFirst({
-//     where: {
-//       id: postId,
-//     },
-//     include: {
-//       comments: {
-//         select: {
-//           body: true,
-//           id: true,
-//           user: {
-//             select: {
-//               name: true,
-//               image: true,
-//               email: true,
-//             },
-//           },
-//         },
-//       },
-//       author: {
-//         select: {
-//           name: true,
-//           image: true,
-//           email: true,
-//         },
-//       },
-//     },
-//   });
-
-//   return {
-//     post: { ...post, isCurrentUser: post?.authorId === userId },
-//   };
-// }
-
 const page = ({ params }: PostPageProps) => {
   const { data: post } = usePosts(params.postId as string);
 
   if (!post) {
     notFound();
   }
-
-  console.log(post);
 
   return (
     <div className="container flex flex-col items-center">
@@ -76,28 +42,28 @@ const page = ({ params }: PostPageProps) => {
         </button>
       </div>
 
-      {/* <ReadOnlyPost
+      <ReadOnlyPost
         post={{
           id: post.id,
           title: post.title,
           content: post.content,
-          published: post.published,
-          createdAt: post.updatedAt,
-          updatedAt: post.updatedAt,
           authorId: post.authorId,
           author: {
             image: post.author.image,
             name: post.author.name,
             email: post.author.image,
           },
-          isCurrentUser: post.isCurrentUser,
         }}
-      /> */}
+      />
 
-      <div className="mx-4 bg-pink-100 flex flex-col justify-start w-full">
+      <div className="mx-4 flex flex-col justify-start w-full max-w-2xl">
         <CommentForm postId={post.id || ""} />
-        <div>
-          {post.comments && (
+
+        {post.comments.length > 0 && (
+          <div className="flex flex-col">
+            <h3 className="text-xl font-bold leading-tight tracking-tighter md:text-2xl lg:text-3xl lg:leading-[1.1]">
+              Recent Comments
+            </h3>
             <div>
               {post.comments?.map((comment: any) => (
                 <CommentCard
@@ -114,8 +80,8 @@ const page = ({ params }: PostPageProps) => {
                 />
               ))}
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -11,6 +11,8 @@ import { buttonVariants } from "./ui/button";
 import { Icons } from "./icons";
 import { toast } from "./ui/use-toast";
 import usePosts from "@/hooks/usePost";
+import useCurrentUser from "@/hooks/useCurrentUser";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 interface commentFormProps {
   postId: string;
@@ -21,6 +23,7 @@ type FormData = z.infer<typeof commentSchema>;
 const CommentForm = ({ postId }: commentFormProps) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const { data: fetchedPost, mutate: mutateFetchedPost } = usePosts(postId);
+  const { data: currentUser } = useCurrentUser();
 
   const {
     register,
@@ -60,20 +63,32 @@ const CommentForm = ({ postId }: commentFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="grid gap-1">
-        <p className="sr-only">Email</p>
-        <Input
-          id="email"
-          placeholder="nice post"
-          autoCapitalize="none"
-          autoCorrect="off"
-          disabled={isLoading}
-          {...register("comment")}
-        />
-        {errors?.comment && (
-          <p className="px-1 text-xs text-red-600">{errors.comment.message}</p>
-        )}
+    <form className="flex p-2 gap-4 mb-6" onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex gap-4 w-full">
+        <Avatar className="w-10 h-10">
+          <AvatarImage
+            className="rounded-full overflow-hidden h-fit"
+            src={currentUser?.image || ""}
+          />
+          <AvatarFallback>{currentUser?.name}</AvatarFallback>
+        </Avatar>
+        <div className="flex gap-1 w-full">
+          <p className="sr-only">Email</p>
+          <Input
+            id="email"
+            placeholder="Post A Comment..."
+            autoCapitalize="none"
+            autoCorrect="off"
+            className="border flex-1"
+            disabled={isLoading}
+            {...register("comment")}
+          />
+          {errors?.comment && (
+            <p className="px-1 text-xs text-red-600">
+              {errors.comment.message}
+            </p>
+          )}
+        </div>
       </div>
       <button className={cn(buttonVariants())} disabled={isLoading}>
         {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
