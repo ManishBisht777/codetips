@@ -5,34 +5,11 @@ import React from "react";
 import { Icons } from "./icons";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { toast } from "./ui/use-toast";
+import useLike from "@/hooks/useLike";
+import { cn } from "@/lib/utils";
 
 export default function PostCard(postData: PostWithUser) {
-  const handleLike = async () => {
-    const isLiked = postData.likedIds.includes(postData.authorId);
-
-    const response = await fetch(`/api/post/like`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: postData.id,
-        isLiked: isLiked,
-      }),
-    });
-
-    if (response.ok) {
-      return toast({
-        description: "Liked updated",
-      });
-    } else {
-      return toast({
-        title: "Some error occured",
-        variant: "destructive",
-      });
-    }
-  };
+  const { hasLiked, toggleLike } = useLike({ postId: postData.id });
 
   return (
     <div className="flex gap-4 border-b p-4">
@@ -60,10 +37,13 @@ export default function PostCard(postData: PostWithUser) {
           doloribus consectetur qui odio consectetur adipisicing elit ...
         </p>
         <div className="flex gap-6 mt-4 text-slate-600">
-          <button className="cursor-pointer relative">
+          <button className="cursor-pointer relative" onClick={toggleLike}>
             <Icons.like
               strokeWidth={1}
-              className="w-5 hover:fill-pink-400 hover:stroke-white transition-all"
+              className={cn(
+                "w-5  transition-all hover:fill-pink-400 hover:stroke-white",
+                hasLiked && "fill-pink-400 stroke-white"
+              )}
             />
             <p className="sr-only">Like</p>
           </button>
