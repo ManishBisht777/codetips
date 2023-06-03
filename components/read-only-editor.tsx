@@ -13,8 +13,11 @@ interface ReadOnlyPostProps {
 const ReadOnlyPost = ({ post }: ReadOnlyPostProps) => {
   const ref = React.useRef<EditorJS>();
 
+  console.log(post);
+
   const initializeEditor = async () => {
     const body = postSchema.parse(post);
+    const Header = (await import("@editorjs/header")).default;
 
     if (!ref.current) {
       const editor = new EditorJS({
@@ -24,6 +27,9 @@ const ReadOnlyPost = ({ post }: ReadOnlyPostProps) => {
           ref.current = editor;
         },
         data: body.content,
+        tools: {
+          header: Header,
+        },
       });
     }
   };

@@ -5,6 +5,7 @@ import { z } from "zod";
 
 const postCreateSchema = z.object({
   title: z.string(),
+  shortdescription: z.string(),
   content: z.any().optional(),
 });
 
@@ -63,13 +64,13 @@ export async function POST(req: Request) {
     if (!session) {
       return new Response("Unauthorized", { status: 403 });
     }
-    console.log(session);
     const json = await req.json();
     const body = postCreateSchema.parse(json);
 
     const post = await prisma.post.create({
       data: {
         title: body.title,
+        shortdescription: body.shortdescription,
         content: body.content,
         authorId: session.user.id,
       },
@@ -81,10 +82,10 @@ export async function POST(req: Request) {
     return new Response(JSON.stringify(post));
   } catch (error) {
     if (error instanceof z.ZodError) {
+      console.log(error);
       return new Response(JSON.stringify(error.issues), { status: 422 });
     }
 
-    console.log(error);
     return new Response(null, { status: 500 });
   }
 }

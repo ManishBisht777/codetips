@@ -19,8 +19,6 @@ export default function PostCard(postData: any) {
     });
   }
 
-  console.log(postData);
-
   return (
     <div className="flex gap-4 border-b p-4">
       <Avatar className="md:w-12 md:h-12 w-8 h-8">
@@ -47,8 +45,7 @@ export default function PostCard(postData: any) {
           {postData.title}
         </Link>
         <p className="md:text-sm text-[.8rem] text-slate-600">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
-          doloribus consectetur qui odio consectetur adipisicing elit ...
+          {postData.shortdescription}
         </p>
         <div className="flex gap-6 mt-4 text-slate-600 items-start">
           <button className="cursor-pointer relative" onClick={toggleLike}>

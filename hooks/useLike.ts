@@ -35,7 +35,7 @@ const useLike = ({ postId }: { postId: string }) => {
       mutateAllPosts();
 
       return toast({
-        description: "like updated",
+        description: !hasLiked ? "Liked post" : "Like updated",
       });
     } catch (error) {
       return toast({

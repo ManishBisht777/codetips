@@ -46,6 +46,7 @@ const Page = ({ params }: PostPageProps) => {
         post={{
           id: post.id,
           title: post.title,
+          shortdescription: post.shortdescription,
           content: post.content,
           authorId: post.authorId,
           author: {

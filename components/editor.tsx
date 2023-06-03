@@ -11,6 +11,9 @@ import { postSchema } from "@/lib/validation/post";
 import { z } from "zod";
 import { toast } from "./ui/use-toast";
 import { useRouter } from "next/navigation";
+import usePosts from "@/hooks/usePost";
+import { Textarea } from "./ui/textarea";
+type FormData = z.infer<typeof postSchema>;
 
 interface EditorProps {
   setToggleCreatePostModal: React.Dispatch<React.SetStateAction<any>>;
@@ -25,18 +28,22 @@ const Editor = ({
   const [isMounted, setIsMounted] = React.useState<boolean>(false);
   const ref = React.useRef<EditorJS>();
   const router = useRouter();
-
-  type FormData = z.infer<typeof postSchema>;
+  const { mutate: mutateAllPosts } = usePosts();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<FormData>({
     resolver: zodResolver(postSchema),
   });
 
   const initializeEditor = React.useCallback(async () => {
+    const EditorJS = (await import("@editorjs/editorjs")).default;
+    const Header = (await import("@editorjs/header")).default;
+    // const List = (await import("@editorjs/list")).default;
+    // const Code = (await import("@editorjs/code")).default;
+
     if (!ref.current) {
       const editor = new EditorJS({
         holder: "editor",
@@ -45,6 +52,9 @@ const Editor = ({
         },
         placeholder: "Type here to write your post...",
         inlineToolbar: true,
+        tools: {
+          header: Header,
+        },
       });
     }
   }, []);
@@ -74,12 +84,14 @@ const Editor = ({
       },
       body: JSON.stringify({
         title: data.title,
+        shortdescription: data.shortdescription,
         content: blocks,
       }),
     });
 
     setIsSaving(false);
     setToggleCreatePostModal(false);
+    mutateAllPosts();
 
     if (!response?.ok) {
       return toast({
@@ -88,8 +100,6 @@ const Editor = ({
         variant: "destructive",
       });
     }
-
-    router.refresh();
 
     return toast({
       description: "Your post has been saved.",
@@ -121,6 +131,9 @@ const Editor = ({
           Save
         </button>
       </div>
+      {errors?.title && (
+        <p className="px-1 text-xs text-red-600">{errors.title?.message}</p>
+      )}
       <div className="prose prose-stone dark:prose-invert mt-4">
         <input
           autoFocus
@@ -128,6 +141,11 @@ const Editor = ({
           placeholder="Post title"
           className="w-full resize-none appearance-none overflow-hidden bg-transparent text-3xl font-bold focus:outline-none mb-4"
           {...register("title")}
+        />
+        <Textarea
+          placeholder="Short Description of Post"
+          className="my-2"
+          {...register("shortdescription")}
         />
         <div id="editor" />
         <p className="text-sm text-gray-500 mt-4">

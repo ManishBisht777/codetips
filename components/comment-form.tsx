@@ -94,7 +94,7 @@ const CommentForm = ({ postId }: commentFormProps) => {
         </div>
       </div>
       <button
-        className={cn(buttonVariants(), "md:block w-full md:w-fit")}
+        className={cn(buttonVariants(), "md:flex w-full md:w-fit")}
         disabled={isLoading}
       >
         {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
