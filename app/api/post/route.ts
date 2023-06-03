@@ -32,6 +32,19 @@ const postCreateSchema = z.object({
 export async function GET(req: Request) {
   const posts = await prisma.post.findMany({
     include: {
+      comments: {
+        select: {
+          id: true,
+          body: true,
+          user: {
+            select: {
+              name: true,
+              image: true,
+              email: true,
+            },
+          },
+        },
+      },
       author: {
         select: {
           name: true,

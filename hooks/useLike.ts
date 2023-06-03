@@ -7,6 +7,7 @@ const useLike = ({ postId }: { postId: string }) => {
   const { data: currentUser } = useCurrentUser();
 
   const { data: fetchedPost, mutate: mutateFetchedPost } = usePosts(postId);
+  const { mutate: mutateAllPosts } = usePosts();
 
   const hasLiked = React.useMemo(() => {
     const list = fetchedPost?.likedIds || [];
@@ -31,6 +32,7 @@ const useLike = ({ postId }: { postId: string }) => {
         }),
       });
       mutateFetchedPost();
+      mutateAllPosts();
 
       return toast({
         description: "like updated",

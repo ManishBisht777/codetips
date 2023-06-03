@@ -4,28 +4,16 @@ import React from "react";
 import PostCard from "./post-card";
 import { Icons } from "./icons";
 import { PostWithUser } from "@/types";
+import usePosts from "@/hooks/usePost";
 
 type Props = {};
 
 const PostList = ({}: Props) => {
-  const [loading, setLoading] = React.useState(false);
-  const [posts, setPosts] = React.useState<PostWithUser[]>([]);
-
-  const fetchPosts = async () => {
-    setLoading(true);
-    const data = await fetch("/api/post");
-    const posts = await data.json();
-    setPosts(posts);
-    setLoading(false);
-  };
-
-  React.useEffect(() => {
-    fetchPosts();
-  }, []);
+  const { isLoading, data: posts } = usePosts();
 
   return (
     <div className="flex flex-col mt-5">
-      {loading ? (
+      {isLoading ? (
         <div className="mt-5 flex justify-center">
           <Icons.spinner className="mr-2 h-4 w-10 animate-spin" />
         </div>

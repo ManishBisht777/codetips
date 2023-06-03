@@ -9,7 +9,7 @@ import useLike from "@/hooks/useLike";
 import { cn, formatEmail } from "@/lib/utils";
 import { toast } from "./ui/use-toast";
 
-export default function PostCard(postData: PostWithUser) {
+export default function PostCard(postData: any) {
   const { hasLiked, toggleLike } = useLike({ postId: postData.id });
 
   function handleBookmark() {
@@ -18,6 +18,8 @@ export default function PostCard(postData: PostWithUser) {
       description: "This feature is currenly being worked on",
     });
   }
+
+  console.log(postData);
 
   return (
     <div className="flex gap-4 border-b p-4">
@@ -60,6 +62,20 @@ export default function PostCard(postData: PostWithUser) {
             <p className="text-xs">{postData.likedIds.length}</p>
             <p className="sr-only">Like</p>
           </button>
+          <Link
+            href={`/post/${postData.id}`}
+            className="flex gap-6 text-slate-600 items-start"
+          >
+            <button className="cursor-pointer" onClick={handleBookmark}>
+              <Icons.comment
+                className="w-5 hover:stroke-blue-500 transition-all"
+                strokeWidth={1}
+              />
+              <p className="text-xs">{postData.comments.length}</p>
+
+              <p className="sr-only">Comment</p>
+            </button>
+          </Link>
           <button className="cursor-pointer" onClick={handleBookmark}>
             <Icons.bookmark
               className="w-5 hover:stroke-blue-500 transition-all"

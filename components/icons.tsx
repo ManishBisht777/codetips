@@ -30,6 +30,7 @@ import {
   Pencil,
   Bookmark,
   Video,
+  MessageSquare,
   LayoutDashboard,
   X,
   type Icon as LucideIcon,
@@ -40,6 +41,7 @@ export type Icon = LucideIcon;
 export const Icons = {
   logo: Anchor,
   logout: LogOut,
+  comment: MessageSquare,
   dashboard: LayoutDashboard,
   star: Star,
   share: Share2,
