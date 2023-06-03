@@ -17,7 +17,7 @@ interface PostPageProps {
   params: { postId: string };
 }
 
-const page = ({ params }: PostPageProps) => {
+const Page = ({ params }: PostPageProps) => {
   const { data: post } = usePosts(params.postId as string);
 
   if (!post) {
@@ -87,4 +87,4 @@ const page = ({ params }: PostPageProps) => {
   );
 };
 
-export default page;
+export default Page;

@@ -14,19 +14,25 @@ const ProfileCard = async (props: profileCardProps) => {
 
   if (!session)
     return (
-      <div>
-        <div className="border flex flex-col gap-6 p-2 pb-6">
-          <div className="flex flex-col gap-4 items-center">
-            <div className="w-full  top-0 h-16 bg-slate-100"></div>
-            <div className="w-14 h-14 bg-black rounded-full -mt-10"></div>
-            <div className="text-center">
-              <p className="font-semibold "></p>
-              <p className="text-sm text-slate-600">
-                Frontend Developer | open souce enthusiast | Freelance Web
-                Developer @Fiverr | Hackathons
-              </p>
-            </div>
+      <div className="border flex flex-col gap-6 p-2 pb-6 items-center">
+        <div className="flex flex-col gap-4 items-center">
+          <div className="w-full  top-0 h-16 bg-slate-100"></div>
+          <div className="w-14 h-14 bg-black rounded-full -mt-10"></div>
+          <div className="text-center">
+            <p className="font-semibold ">Login Please</p>
+            <p className="text-sm text-slate-600">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem
+              ipsum dolor sit.
+            </p>
           </div>
+        </div>
+        <div className="text-sm text-slate-600">
+          <span className="text-slate-900 font-semibold"> 210</span> Followers{" "}
+          <span className="text-slate-900 font-semibold">513 </span> Following
+        </div>
+        <div className="flex justify-center gap-4 border-t pt-4 w-full">
+          <div className="w-1/2 h-10 bg-slate-100 rounded-sm"></div>
+          <div className="w-1/2 h-10 bg-slate-100 rounded-sm"></div>
         </div>
       </div>
     );
@@ -40,7 +46,6 @@ const ProfileCard = async (props: profileCardProps) => {
   return (
     <div className="border flex flex-col gap-6 p-2 pb-6">
       <div className="flex flex-col gap-4 items-center">
-        {/* <Image src={} /> */}
         <div className="w-full  top-0 h-16 bg-slate-100"></div>
         <Avatar className="w-16 h-16 -mt-10">
           <AvatarImage

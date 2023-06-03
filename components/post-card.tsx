@@ -46,7 +46,7 @@ export default function PostCard(postData: PostWithUser) {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
           doloribus consectetur qui odio consectetur adipisicing elit ...
         </p>
-        <div className="flex gap-6 mt-4 text-slate-600">
+        <div className="flex gap-6 mt-4 text-slate-600 items-start">
           <button className="cursor-pointer relative" onClick={toggleLike}>
             <Icons.like
               strokeWidth={1}
@@ -55,6 +55,7 @@ export default function PostCard(postData: PostWithUser) {
                 hasLiked && "fill-pink-400 stroke-white"
               )}
             />
+            <p className="text-xs">{postData.likedIds.length}</p>
             <p className="sr-only">Like</p>
           </button>
           <button className="cursor-pointer" onClick={handleBookmark}>
