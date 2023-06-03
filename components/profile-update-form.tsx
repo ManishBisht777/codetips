@@ -37,8 +37,6 @@ const ProfileUpdateForm = ({ user }: ProfileUpdateFormProps) => {
   async function onSubmit(data: FormData) {
     setIsSaving(true);
 
-    console.log(data);
-
     const response = await fetch(`/api/user/${user.id}`, {
       method: "PATCH",
       headers: {
@@ -67,7 +65,7 @@ const ProfileUpdateForm = ({ user }: ProfileUpdateFormProps) => {
 
   return (
     <form
-      className="w-full p-4 border rounded-sm flex flex-col gap-2 items-start mt-6"
+      className="w-full p-4 border rounded-sm flex flex-col gap-6 items-start mt-6"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="">

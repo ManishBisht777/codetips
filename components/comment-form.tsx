@@ -63,7 +63,10 @@ const CommentForm = ({ postId }: commentFormProps) => {
   };
 
   return (
-    <form className="flex p-2 gap-4 mb-6" onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className="flex p-2 gap-4 mb-6 flex-wrap"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className="flex gap-4 w-full">
         <Avatar className="w-10 h-10">
           <AvatarImage
@@ -90,7 +93,10 @@ const CommentForm = ({ postId }: commentFormProps) => {
           )}
         </div>
       </div>
-      <button className={cn(buttonVariants())} disabled={isLoading}>
+      <button
+        className={cn(buttonVariants(), "md:block w-full")}
+        disabled={isLoading}
+      >
         {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
         Comment
       </button>

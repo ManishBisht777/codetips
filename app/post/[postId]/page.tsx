@@ -25,7 +25,7 @@ const Page = ({ params }: PostPageProps) => {
   }
 
   return (
-    <div className="container flex flex-col items-center">
+    <div className="container md:px-0 px-4 flex flex-col items-center">
       <div className="flex w-full items-center justify-between mt-6">
         <div className="flex items-center space-x-10">
           <Link

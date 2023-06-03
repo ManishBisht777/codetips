@@ -13,7 +13,7 @@ const Page = async (props: Props) => {
 
   return (
     <div className="flex gap-8 mt-16">
-      <div className="w-full px-10 py-2 flex flex-col">
+      <div className="w-full md:px-10 px-2 py-2 flex flex-col">
         {user ? (
           <AddPost />
         ) : (
@@ -31,7 +31,7 @@ const Page = async (props: Props) => {
         )}
         <PostList />
       </div>
-      <div className="fixed top-14 z-30 hidden h-[calc(100vh-10rem)] w-[260px] shrink-0 overflow-y-auto py-6 pr-2 md:sticky md:block lg:py-10">
+      <div className="lg:flex hidden fixed top-14 z-30 h-[calc(100vh-10rem)] w-[260px] shrink-0 overflow-y-auto py-6 pr-2 md:sticky md:block lg:py-10">
         What do i put here?
       </div>
     </div>

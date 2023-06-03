@@ -36,7 +36,7 @@ const exploreLayout = async ({ children }: exploreLayoutProps) => {
           </nav>
         </div>
       </header>
-      <div className="mt-3 container flex-1 md:grid md:grid-cols-[220px_1fr] md:gap-6 lg:grid-cols-[260px_1fr] lg:gap-10">
+      <div className="mt-3 container md:px-0 px-2 flex-1 md:grid md:grid-cols-[220px_1fr] md:gap-6 lg:grid-cols-[260px_1fr] lg:gap-10">
         <aside className="fixed top-20 z-30 hidden h-[calc(100vh-10rem)] w-full shrink-0 overflow-y-auto  md:sticky md:block lg:py-2">
           {/* @ts-expect-error Server Component */}
           <ProfileCard />

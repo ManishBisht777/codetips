@@ -18,7 +18,7 @@ interface CommentCardProps {
 const CommentCard = ({ comment }: CommentCardProps) => {
   return (
     <div className="flex gap-4 p-4 border-b my-4">
-      <Avatar className="w-12 h-12">
+      <Avatar className="md:w-12 md:h-12 w-8 h-8">
         <AvatarImage
           className="rounded-full overflow-hidden h-fit"
           src={comment.user.image || ""}
@@ -28,8 +28,10 @@ const CommentCard = ({ comment }: CommentCardProps) => {
 
       <div className="flex-1">
         <div className="flex gap-2 items-center">
-          <p className="text-slate-800 font-medium">{comment.user.name}</p>
-          <p className="text-slate-500 text-sm">
+          <p className="text-slate-800 font-medium md:text-[1rem] text-sm">
+            {comment.user.name}
+          </p>
+          <p className="text-slate-500 md:text-sm text-xs">
             {formatEmail(comment.user.email || "")}
           </p>
         </div>

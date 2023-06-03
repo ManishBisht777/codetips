@@ -22,8 +22,8 @@ const EditProfile = async (props: Props) => {
 
   return (
     <div>
-      <h3 className="text-xl md:text-4xl font-bold">Profile</h3>
-      <p className="text-slate-400 mt-2">See and edit profile as you like</p>
+      <h3 className="text-2xl md:text-4xl font-bold">Profile</h3>
+      <p className="text-slate-400 md:mt-2">See and Edit Profile as you like</p>
       <ProfileUpdateForm
         user={{ id: user.id, name: user.name || "", bio: data?.bio || "" }}
       />

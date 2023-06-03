@@ -36,9 +36,9 @@ const DashBoard = async (props: DashBoardProps) => {
     <div>
       {posts?.length ? (
         <>
-          <h3 className="text-xl md:text-4xl font-bold">Your Posts</h3>
-          <p className="text-slate-400 mt-2">Create and manage you posts</p>
-          <div className="divide-y divide-border rounded-md border mt-5 p-2">
+          <h3 className="text-2xl md:text-4xl font-bold">Your Posts</h3>
+          <p className="text-slate-400 md:mt-2">Create and manage you posts</p>
+          <div className="rounded-md mt-5 p-2">
             {posts.map((post) => (
               <PostCard key={post.id} {...post} />
             ))}

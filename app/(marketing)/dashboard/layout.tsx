@@ -10,7 +10,7 @@ export default async function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
   return (
-    <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr] mt-4">
+    <div className="container md:px-0 px-4 grid flex-1 gap-12 md:grid-cols-[200px_1fr] mt-4">
       <aside className="hidden w-[200px] flex-col md:flex">
         <DashboardNav items={sidebarConfig.sidebar} />
       </aside>

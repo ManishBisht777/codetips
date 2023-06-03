@@ -6,9 +6,9 @@ type Props = {};
 
 function Footer({}: Props) {
   return (
-    <footer className="container flex gap-4 p-6">
+    <footer className="container flex items-center md:flex-row flex-col gap-4 p-6">
       <Icons.logo />
-      <p className="flex gap-1">
+      <p className="flex justify-center items-center flex-wrap gap-1">
         Built by
         <a
           href={siteConfig.links.twitter}

@@ -15,7 +15,7 @@ const ProfileCard = async (props: profileCardProps) => {
 
   if (!session)
     return (
-      <div className="border flex flex-col gap-6 p-2 pb-6 items-center">
+      <div className="border md:flex hidden flex-col gap-6 p-2 pb-6 items-center">
         <div className="flex flex-col gap-4 items-center">
           <div className="w-full  top-0 h-16 bg-slate-100"></div>
           <div className="w-14 h-14 bg-black rounded-full -mt-10"></div>

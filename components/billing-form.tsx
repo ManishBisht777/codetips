@@ -50,7 +50,7 @@ const BillingForm = ({ subscriptionPlan }: BillingProps) => {
       <form
         action=""
         onSubmit={onSubmit}
-        className="flex justify-between items-center w-full"
+        className="flex justify-between flex-col md:flex-row items-center w-full"
       >
         <button type="submit" className={cn(buttonVariants())}>
           {isLoading && <Icons.spinner className="mr-1 animate-spin w-4 h-4" />}

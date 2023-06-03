@@ -21,7 +21,7 @@ export default function PostCard(postData: PostWithUser) {
 
   return (
     <div className="flex gap-4 border-b p-4">
-      <Avatar className="w-12 h-12">
+      <Avatar className="md:w-12 md:h-12 w-8 h-8">
         <AvatarImage
           className="rounded-full overflow-hidden h-fit"
           src={postData.author.image || ""}
@@ -31,8 +31,10 @@ export default function PostCard(postData: PostWithUser) {
 
       <div className="flex-1">
         <div className="flex gap-2 items-center">
-          <p className="text-slate-800 font-medium">{postData.author.name}</p>
-          <p className="text-slate-500 text-sm">
+          <p className="text-slate-800 font-medium md:text-[1rem] text-sm">
+            {postData.author.name}
+          </p>
+          <p className="text-slate-500 md:text-sm text-xs">
             {formatEmail(postData.author.email || "")}
           </p>
         </div>
@@ -42,7 +44,7 @@ export default function PostCard(postData: PostWithUser) {
         >
           {postData.title}
         </Link>
-        <p className="text-sm text-slate-600">
+        <p className="md:text-sm text-[.8rem] text-slate-600">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
           doloribus consectetur qui odio consectetur adipisicing elit ...
         </p>

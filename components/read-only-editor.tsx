@@ -34,10 +34,10 @@ const ReadOnlyPost = ({ post }: ReadOnlyPostProps) => {
 
   return (
     <div className="mt-10 flex flex-col items-center text-center max-w-[720px]">
-      <h1 className="text-xl font-bold leading-tight tracking-tighter md:text-3xl lg:text-3xl lg:leading-[1.1]">
+      <h1 className="text-2xl font-bold leading-tight tracking-tighter md:text-3xl lg:text-3xl lg:leading-[1.1]">
         {post.title}
       </h1>
-      <p className="text-lg text-slate-600 mt-4">
+      <p className="md:text-lg text-sm text-slate-600 md:mt-4 mt-1">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim doloribus
         consectetur qui odio consectetur adipisicing elit ...
       </p>
@@ -54,7 +54,7 @@ const ReadOnlyPost = ({ post }: ReadOnlyPostProps) => {
           <p className="text-slate-500 text-sm">@manishbisht9711</p>
         </div>
       </div>
-      <div id="editor"></div>
+      <div className="text-sm px-4" id="editor"></div>
     </div>
   );
 };

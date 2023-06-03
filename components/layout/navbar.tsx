@@ -6,6 +6,7 @@ import { Icons } from "../icons";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { NavItem } from "@/types";
+import { MobileNav } from "./mobile-nav";
 
 type Props = {
   items?: NavItem[];
@@ -14,6 +15,7 @@ type Props = {
 
 const MainNav = ({ items, children }: Props) => {
   const segment = useSelectedLayoutSegment();
+  const [showMobileMenu, setShowMobileMenu] = React.useState<boolean>(false);
 
   return (
     <div className="flex gap-6 md:gap-10">
@@ -43,8 +45,16 @@ const MainNav = ({ items, children }: Props) => {
             );
           })}
         </nav>
-      ) : (
-        <></>
+      ) : null}
+      <button
+        className="flex items-center space-x-2 md:hidden"
+        onClick={() => setShowMobileMenu(!showMobileMenu)}
+      >
+        {showMobileMenu ? <Icons.close /> : <Icons.logo />}
+        <span className="font-bold">Menu</span>
+      </button>
+      {showMobileMenu && items && (
+        <MobileNav items={items}>{children}</MobileNav>
       )}
     </div>
   );
