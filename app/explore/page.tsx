@@ -32,12 +32,7 @@ const Page = async (props: Props) => {
         <PostList />
       </div>
       <div className="fixed top-14 z-30 hidden h-[calc(100vh-10rem)] w-[260px] shrink-0 overflow-y-auto py-6 pr-2 md:sticky md:block lg:py-10">
-        <ul>
-          <li>Infinite scroll</li>
-          <li>performance optimise</li>
-          <li>scroll optimise</li>
-          <li>PWA</li>
-        </ul>
+        What do i put here?
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { getSession } from "@/lib/session";
 import { prisma } from "@/lib/db";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { getCurrentUserPlan } from "@/lib/subscription";
 
 interface profileCardProps {}
 
@@ -43,6 +44,8 @@ const ProfileCard = async (props: profileCardProps) => {
     },
   });
 
+  const subscriptionPlan = await getCurrentUserPlan(data?.id || "");
+
   return (
     <div className="border flex flex-col gap-6 p-2 pb-6">
       <div className="flex flex-col gap-4 items-center">
@@ -55,7 +58,14 @@ const ProfileCard = async (props: profileCardProps) => {
           <AvatarFallback>{data?.name}</AvatarFallback>
         </Avatar>
         <div className="text-center">
-          <p className="font-semibold ">{session.user.name}</p>
+          <p
+            className={cn(
+              "font-semibold",
+              subscriptionPlan.isPro ? "text-purple-500" : "text-slate-500"
+            )}
+          >
+            {session.user.name}
+          </p>
           <p className="text-sm text-slate-600">{data?.bio}</p>
         </div>
         <div className="text-sm text-slate-600">

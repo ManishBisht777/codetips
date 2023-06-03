@@ -12,7 +12,7 @@ export const navbarConfig: NavbarConfig = {
     },
     {
       title: "Subscription",
-      href: "/dashboard/billing",
+      href: "/subscription",
     },
   ],
 };
