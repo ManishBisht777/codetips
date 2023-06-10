@@ -2,12 +2,13 @@ import { toast } from "@/components/ui/use-toast";
 import usePosts from "./usePost";
 import React from "react";
 import useCurrentUser from "./useCurrentUser";
+import useInfinitePosts from "./useInfinitePosts";
 
 const useLike = ({ postId }: { postId: string }) => {
   const { data: currentUser } = useCurrentUser();
 
   const { data: fetchedPost, mutate: mutateFetchedPost } = usePosts(postId);
-  const { mutate: mutateAllPosts } = usePosts();
+  const { mutate: mutateAllPosts } = useInfinitePosts();
 
   const hasLiked = React.useMemo(() => {
     const list = fetchedPost?.likedIds || [];
