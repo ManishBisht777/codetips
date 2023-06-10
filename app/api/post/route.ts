@@ -9,29 +9,20 @@ const postCreateSchema = z.object({
   content: z.any().optional(),
 });
 
-// export async function GET(request: Request) {
-//   const { searchParams } = new URL(request.url);
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
 
-//   const pageNumberParam = searchParams.get("page");
-//   const pageNumber = pageNumberParam ? parseInt(pageNumberParam) : 0;
+  const pageNumberParam = searchParams.get("page");
+  const pageNumber = pageNumberParam ? parseInt(pageNumberParam) : 0;
 
-//   const pageSizeParam = process.env.PAGE_SIZE;
-//   const pageSize = pageSizeParam ? parseInt(pageSizeParam) : 20;
-//   console.log(pageNumber);
-//   console.log(pageSize);
+  const pageSizeParam = process.env.PAGE_SIZE;
+  const pageSize = pageSizeParam ? parseInt(pageSizeParam) : 2;
 
-//   const skipAmount = pageNumber * pageSize;
+  const skipAmount = pageNumber * pageSize;
 
-//   const posts = await prisma.post.findMany({
-//     skip: skipAmount,
-//     take: pageSize,
-//   });
-
-//   return new Response(JSON.stringify(posts));
-// }
-
-export async function GET(req: Request) {
   const posts = await prisma.post.findMany({
+    skip: skipAmount,
+    take: pageSize,
     include: {
       comments: {
         select: {
@@ -55,8 +46,37 @@ export async function GET(req: Request) {
       },
     },
   });
+
   return new Response(JSON.stringify(posts));
 }
+
+// export async function GET(req: Request) {
+//   const posts = await prisma.post.findMany({
+//     include: {
+//       comments: {
+//         select: {
+//           id: true,
+//           body: true,
+//           user: {
+//             select: {
+//               name: true,
+//               image: true,
+//               email: true,
+//             },
+//           },
+//         },
+//       },
+//       author: {
+//         select: {
+//           name: true,
+//           image: true,
+//           email: true,
+//         },
+//       },
+//     },
+//   });
+//   return new Response(JSON.stringify(posts));
+// }
 
 export async function POST(req: Request) {
   try {
