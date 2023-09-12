@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { userAuthSchema } from "@/lib/validation/auth";
 import z from "zod";
 import { signIn } from "next-auth/react";
+import { useToast } from "./ui/use-toast";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -18,6 +19,9 @@ type FormData = z.infer<typeof userAuthSchema>;
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false);
+  const [isGoogleLoading, setIsGoogleLoading] = React.useState<boolean>(false);
+
+  const { toast } = useToast();
 
   const {
     register,
@@ -31,6 +35,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     setIsLoading(true);
 
     console.log(data);
+
+    toast({
+      title: "Status pending",
+      description: "This Feature is till in developemnet",
+    });
 
     setIsLoading(false);
   }
@@ -90,6 +99,22 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           <Icons.gitHub className="mr-2 h-4 w-4" />
         )}{" "}
         Github
+      </button>
+      <button
+        type="button"
+        className={cn(buttonVariants({ variant: "outline" }), "-mt-3")}
+        onClick={() => {
+          setIsGoogleLoading(true);
+          signIn("google");
+        }}
+        disabled={isLoading || isGoogleLoading}
+      >
+        {isGoogleLoading ? (
+          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+        ) : (
+          <Icons.google className="mr-2 h-4 w-4" />
+        )}{" "}
+        Google
       </button>
     </div>
   );
